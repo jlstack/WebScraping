@@ -4,6 +4,8 @@ import time
 
 USERNAME = ''
 PASSWORD = ''
+REGISTERPIN = ''
+
 try:
     path_to_chromedriver = '/Users/lukestack/Downloads/chromedriver' # change path as needed
     browser = webdriver.Chrome(executable_path = path_to_chromedriver)
@@ -22,7 +24,7 @@ try:
     browser.find_element_by_id("term_id").click()
     browser.find_element_by_xpath("//*[@id='term_id']/option[1]").click()
     browser.find_element_by_xpath("//input").click()
-    browser.find_element_by_xpath("//input").send_keys("000820")
+    browser.find_element_by_xpath("//input").send_keys(REGISTERPIN)
     browser.find_element_by_xpath("//input[contains(@type, 'submit')]").click()
     """
     for result in results:
