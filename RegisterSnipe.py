@@ -1,18 +1,20 @@
 __author__ = 'lukestack'
 from selenium import webdriver
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 
 USERNAME = ''
 PASSWORD = ''
 REGISTERPIN = ''
 SEMESTER = 'Fall 2015'
-CRNS = ["11156"] #max 10 CRNS
-REGISTERDATE = datetime(2015, 3, 29, 20, 12)#datetime('Year', 'Month', 'Date', 'Hour(0-24)', 'Minute')
+CRNS = ["11156", "10387", "16238", "10383", "10384", "10658", "13435"] # max 10 CRNS
+REGISTERDATE = datetime(2015, 3, 30, 1, 40) # datetime('Year', 'Month', 'Date', 'Hour(0-23)', 'Minute')
 present = datetime.now()
 while present.date() < REGISTERDATE.date():
-    pass
+    time.sleep(60 * 15) # sleeps for 15 minutes
+    present = datetime.now()
 while present.time() < REGISTERDATE.time():
+    time.sleep(1) # sleeps for 1 second before checking again
     present = datetime.now()
 try:
     path_to_chromedriver = '/Users/lukestack/Downloads/chromedriver' # change path as needed
@@ -34,11 +36,11 @@ try:
     browser.find_element_by_xpath("//input").send_keys(REGISTERPIN)
     browser.find_element_by_xpath("//input[contains(@type, 'submit')]").click()
     crn_inputs = browser.find_elements_by_xpath("//input[contains(@id, 'crn_id')]")
-    print len(crn_inputs)
+    print crn_inputs
     for i in range(len(CRNS)):
         crn_inputs[i].send_keys(CRNS[i])
     browser.find_element_by_xpath("/html/body/div[3]/form/input[contains(@value, 'Submit Changes')]").click()
+    time.sleep(5)
+    browser.close()
 except:
     pass
-time.sleep(5)
-browser.close()
